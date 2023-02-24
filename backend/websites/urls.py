@@ -4,6 +4,7 @@ from .import views
 
 router = DefaultRouter()
 
-router.register('', views.WebsiteViewset, basename='websites')
+router.register('websites', views.WebsiteViewset, basename='websites')
+router.register('credentials', views.CredentialViewset, basename='credentials')
 
 urlpatterns = router.urls
