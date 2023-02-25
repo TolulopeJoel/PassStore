@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     # local apps
     'websites.apps.WebsitesConfig',
+    'accounts.apps.AccountsConfig',
     
     # 3rd party apps
     'rest_framework',
