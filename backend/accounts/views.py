@@ -6,7 +6,7 @@ from accounts.models import CustomUser
 from .serializers import RegisterUserSerializer, UserSerializer
 
 
-class UserViewset(viewsets.ModelViewSet):
+class UserViewset(viewsets.ReadOnlyModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
