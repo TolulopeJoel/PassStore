@@ -19,7 +19,7 @@ class Website(models.Model):
 
 class Credential(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE) 
-    website = models.ForeignKey(Website, on_delete=models.CASCADE, related_name='details')
+    website = models.ForeignKey(Website, on_delete=models.CASCADE, related_name='credentials')
     username = models.CharField(max_length=50, blank=True)
     password = models.CharField(max_length=50)
     

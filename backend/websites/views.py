@@ -14,6 +14,23 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
 
+    def get_queryset(self, *args, **kwargs):
+        """
+        Return websites only if website has credentials.
+        And delete websites without credentials.
+        """
+        queryset = super().get_queryset()
+        websites_with_credentials = []
+
+        for website in queryset:
+            website_credentials = website.credentials.all()
+            if website_credentials.count() > 0:
+                websites_with_credentials.append(website.id)
+            else:
+                Website.objects.get(id=website.id).delete()
+
+        return super().get_queryset().filter(id__in=websites_with_credentials)
+
 
 class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
     queryset = Credential.objects.all()

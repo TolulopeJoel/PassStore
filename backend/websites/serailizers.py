@@ -20,7 +20,7 @@ class CredentialPublicSerializer(serializers.Serializer):
 
 class WebsiteSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
-    credentials = CredentialPublicSerializer(many=True, read_only=True, source='details')
+    credentials = CredentialPublicSerializer(many=True, read_only=True)
 
     class Meta:
         model = Website
