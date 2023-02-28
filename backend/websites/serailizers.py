@@ -5,18 +5,32 @@ from accounts.serializers import UserPublicSerializer
 from .models import Website, Credential
 
 
-class WebsiteSerializer(serializers.ModelSerializer):
-    user = UserPublicSerializer(read_only=True)
-
-    class Meta:
-        model = Website
-        fields = ('id', 'user', 'url', 'updated_at')
-
-
 class WebsitePublicSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     url = serializers.URLField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
+
+
+class CredentialPublicSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    username = serializers.CharField(read_only=True)
+    password = serializers.CharField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
+
+
+class WebsiteSerializer(serializers.ModelSerializer):
+    user = UserPublicSerializer(read_only=True)
+    credentials = CredentialPublicSerializer(many=True, read_only=True, source='details')
+
+    class Meta:
+        model = Website
+        fields = [
+            'id',
+            'user',
+            'url',
+            'credentials',
+            'updated_at',
+        ]
 
 
 class CredentialSerializer(serializers.ModelSerializer):
