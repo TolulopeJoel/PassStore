@@ -12,6 +12,12 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
+class UserPublicSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    username = serializers.CharField(read_only=True, max_length=225)
+    email = serializers.EmailField(read_only=True)
+
+
 class RegisterUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=255)
     last_name = serializers.CharField(max_length=255)
