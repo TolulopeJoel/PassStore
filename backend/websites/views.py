@@ -12,7 +12,10 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
     serializer_class = WebsiteSerializer
 
     def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
+        try:
+            return serializer.save(user=self.request.user)
+        except:
+            return Response({'detail': 'Already created'}, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self, *args, **kwargs):
         """
