@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from . import encryption
+
 
 class Website(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='websites')
@@ -29,6 +31,9 @@ class Credential(models.Model):
     class Meta:
         ordering = ('-updated_at',)
         unique_together = 'website', 'username', 'password'
+
+    def decrypt_password(self):
+        return encryption.decrypt_password(self.password)
     
     def __str__(self):
         return self.username

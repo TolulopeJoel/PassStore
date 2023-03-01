@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from datetime import timedelta
+from environs import Env
 from pathlib import Path
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -158,3 +162,6 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
+
+ENCRYPTION_KEY = env.str('ENCRYPTION_KEY', default='US_3ljng2HJO6lBeJBLk_Gme_ReYv6tHOayXBWbxZ5Y=')
+ENCRYPTION_KEY = ENCRYPTION_KEY.encode()

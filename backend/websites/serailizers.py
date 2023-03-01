@@ -36,6 +36,7 @@ class WebsiteSerializer(serializers.ModelSerializer):
 class CredentialSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     website = WebsitePublicSerializer(read_only=True)
+    password = serializers.CharField(source='decrypt_password')
 
     class Meta:
         model = Credential
