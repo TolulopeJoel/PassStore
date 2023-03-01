@@ -1,4 +1,4 @@
-from rest_framework import status, viewsets
+from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 
 from accounts.mixins import UserQuerySetMixin
@@ -45,3 +45,31 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
             return serializer.save(user=user, website=website)
         except:
             return Response({'detail': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class SameCredentials(generics.ListAPIView):
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        site_credentials = user.credentials.all()
+
+        # Create a dictionary to group site credentials by password
+        password_details = {}
+        for credentials in site_credentials:
+            password = credentials.password
+            website = {
+                'username': credentials.username,
+                'url': credentials.website.url,
+            }
+            if password in password_details:
+                password_details[password]['websites'].append(website)
+            else:
+                password_details[password] = {
+                    'password': password,
+                    'websites': [website],
+                }
+
+        # Create a list of password that's used with multiple websites
+        same_password = [credentials for password, credentials in password_details.items() if len(credentials['websites']) > 1]
+
+        return Response(same_password, status=status.HTTP_200_OK)
