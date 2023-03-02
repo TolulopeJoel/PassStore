@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
@@ -57,6 +58,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -165,3 +167,7 @@ SIMPLE_JWT = {
 
 ENCRYPTION_KEY = env.str('ENCRYPTION_KEY', default='US_3ljng2HJO6lBeJBLk_Gme_ReYv6tHOayXBWbxZ5Y=')
 ENCRYPTION_KEY = ENCRYPTION_KEY.encode()
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
+]
