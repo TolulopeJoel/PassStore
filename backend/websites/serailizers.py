@@ -14,7 +14,7 @@ class WebsitePublicSerializer(serializers.Serializer):
 class CredentialPublicSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     username = serializers.CharField(read_only=True)
-    password = serializers.CharField(read_only=True)
+    password = serializers.CharField(read_only=True, source='decrypt_password')
     updated_at = serializers.DateTimeField(read_only=True)
 
 
@@ -36,7 +36,8 @@ class WebsiteSerializer(serializers.ModelSerializer):
 class CredentialSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     website = WebsitePublicSerializer(read_only=True)
-    password = serializers.CharField(source='decrypt_password')
+    password = serializers.CharField(write_only=True)
+    password_ = serializers.CharField(read_only=True, source='decrypt_password')
 
     class Meta:
         model = Credential
@@ -46,5 +47,6 @@ class CredentialSerializer(serializers.ModelSerializer):
             'website',
             'username',
             'password',
+            'password_',
             'updated_at',
         ]

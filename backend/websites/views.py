@@ -47,17 +47,14 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
         try:
             website = Website.objects.get(id=website_id)
-            return serializer.save(user=user, website=website, password=encrypt_password(password))
         except:
             return Response({'detail': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
+        return serializer.save(user=user, website=website, password=encrypt_password(password))
         
     def perform_update(self, serializer):
-        password = serializer.validated_data.get('decrypt_password')
+        password = serializer.validated_data.get('password')
+        return serializer.save(password=encrypt_password(password))
 
-        try:
-            return serializer.save(password=encrypt_password(password))
-        except:
-            return Response({'detail': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class SameCredentials(generics.ListAPIView):
 
