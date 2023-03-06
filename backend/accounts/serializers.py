@@ -1,16 +1,29 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from websites.models import Credential
+
 
 class UserSerializer(serializers.ModelSerializer):
+    saved_passwords = serializers.SerializerMethodField()
+
     class Meta:
         model = get_user_model()
         fields = [
             'id',
             'username',
             'first_name',
+            'last_name',
             'email',
+            'saved_passwords',
+            'date_joined',
         ]
+    
+    def get_saved_passwords(self, obj):
+        request = self.context.get('request')
+        user = request.user
+        site_credentials = Credential.objects.filter(user=user)
+        return len(site_credentials)
 
 
 class UserPublicSerializer(serializers.Serializer):
