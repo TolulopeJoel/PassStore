@@ -22,7 +22,7 @@ function Navbar() {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="">Profile</a>
+                            <a className="nav-link" aria-current="page" href="/profile">Profile</a>
                         </li>
 
                         <li className="nav-item">
