@@ -18,12 +18,7 @@ import axios from "axios";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {'© Pass Store'} {new Date().getFullYear()}
     </Typography>
   );
 }
@@ -37,7 +32,8 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [error, setError] = useState({});
+  const [fieldErrors, setfieldErrors] = useState({});
+  const [otherErrors, setotherErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -51,34 +47,19 @@ export default function SignUp() {
         first_name: firstName,
         password2: password2,
       });
-      navigate("/signin");
+      navigate("/signin")
     } catch (error) {
       if (error.response.data.detail) {
-        setError([error.response.data.detail]);
+        setotherErrors([error.response.data.detail]);
       } else if (error.response.data.message) {
-        setError([error.response.data.message]);
+        setotherErrors([error.response.data.message]);
       } else if (error.response.data.non_field_errors) {
-        setError(error.response.data.non_field_errors);
+        setotherErrors(error.response.data.non_field_errors);
       } else {
-        setError(['An error occurred. Please try again later.']);
+        setfieldErrors(error.response.data);
       }
-      console.log(error.response.data);
-      setError(error.response.data);
     }
-  }
-  // catch (error) {
-  //   if (error.response.data.detail) {
-  //     setError([error.response.data.detail]);
-  //   } else if (error.response.data.message) {
-  //     setError([error.response.data.message]);
-  //   } else if (error.response.data.non_field_errors) {
-  //     setError(error.response.data.non_field_errors);
-  //   } else {
-  //     setError(['An error occurred. Please try again later.']);
-  //   }
-  // }
-
-
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,31 +72,36 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          {otherErrors && Object.values(otherErrors).map((errorMessage) => {
+            return (
+              <div className="alert alert-danger w-100">{errorMessage}</div>
+            )})
+          }
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                {error.first_name && (<div className="text-danger w-100">{error.first_name}</div>)}
+                {fieldErrors.first_name && (<div className="text-danger w-100">{fieldErrors.first_name}</div>)}
                 <TextField required fullWidth label="First Name" value={firstName} onChange={(event) => setFirstName(event.target.value)} />
               </Grid>
               <Grid item xs={12} sm={6}>
-                {error.last_name && (<div className="text-danger w-100">{error.last_name}</div>)}
+                {fieldErrors.last_name && (<div className="text-danger w-100">{fieldErrors.last_name}</div>)}
                 <TextField required fullWidth label="Last Name" value={lastName} onChange={(event) => setLastName(event.target.value)} />
               </Grid>
               <Grid item xs={12}>
-                {error.username && (<div className="text-danger w-100">{error.username}</div>)}
+                {fieldErrors.username && (<div className="text-danger w-100">{fieldErrors.username}</div>)}
                 <TextField required fullWidth label="Username" value={username} onChange={(event) => setUsername(event.target.value)} />
               </Grid>
               <Grid item xs={12}>
-                {error.email && (<div className="text-danger w-100">{error.email}</div>)}
+                {fieldErrors.email && (<div className="text-danger w-100">{fieldErrors.email}</div>)}
                 <TextField required fullWidth label="Email Address" name="email" value={email} onChange={(event) => setEmail(event.target.value)} />
               </Grid>
               <Grid item xs={12}>
-                {error.password && (<div className="text-danger w-100">{error.password}</div>)}
+                {fieldErrors.password && (<div className="text-danger w-100">{fieldErrors.password}</div>)}
                 <TextField required fullWidth label="Password" type="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} />
               </Grid>
               <Grid item xs={12}>
-                {error.password2 && (<div className="text-danger w-100">{error.password2}</div>)}
+                {fieldErrors.password2 && (<div className="text-danger w-100">{fieldErrors.password2}</div>)}
                 <TextField required fullWidth label="Confirm Password" type="password" id="password2" value={password2} onChange={(event) => setPassword2(event.target.value)} />
               </Grid>
               <Grid item xs={12}>
