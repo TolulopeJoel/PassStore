@@ -55,7 +55,7 @@ function WebsiteList() {
             </div>
           </div>
         ))}
-        <a href="" className="btn btn-lg my-3 mx-auto add-password">Add Password +</a>
+        <a href="/create" className="btn btn-lg my-3 mx-auto add-password">Add Password +</a>
       </div>
     </div>
   );
