@@ -34,13 +34,13 @@ function SamePassword() {
                         <div>
                             <div className="border rounded-3 align-items-center row p-3 my-4">
                                 <h6 className="col-lg-9 col-md-9 col-sm-8"><span className="text-secondary">password:</span> <b><i>{credential.password}</i></b></h6>
-                                <a class="btn btn-primary col-lg-1 col-md-1 col-sm-2" data-bs-toggle="collapse"
+                                <a className="btn btn-primary col-lg-1 col-md-1 col-sm-2" data-bs-toggle="collapse"
                                     href={`#c${credential.password}`} role="button" aria-expanded="false" aria-controls={`c${credential.password}`}>view
                                 </a>
 
                                 {credential.websites && credential.websites.map(website => (
-                                    <div class="collapse mt-3" id={`c${credential.password}`}>
-                                        <div class="card card-body">
+                                    <div className="collapse mt-3" id={`c${credential.password}`}>
+                                        <div className="card card-body">
                                             <p>username : <b><i>{website.username}</i></b></p>
                                             <p>website : <b><i>{website.url}</i></b></p>
                                         </div>
