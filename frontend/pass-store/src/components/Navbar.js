@@ -18,7 +18,7 @@ function Navbar() {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="">SamePasswords</a>
+                            <a className="nav-link" aria-current="page" href="/same-password">SamePasswords</a>
                         </li>
 
                         <li className="nav-item">
@@ -29,7 +29,7 @@ function Navbar() {
                             <a className="nav-link" aria-current="page" href="">Logout</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="/login">Login</a>
+                            <a className="nav-link" aria-current="page" href="/signin">Login</a>
                         </li>
                     </ul>
                 </div>
