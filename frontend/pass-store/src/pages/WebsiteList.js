@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import WebsiteService from "../services/WebsiteService";
+import { WebsiteService } from "../services/WebsiteService";
 import Navbar from "../components/Navbar";
 
 function WebsiteList() {
   const [websites, setWebsites] = useState([]);
+  const websiteService = new WebsiteService()
 
   useEffect(() => {
-    WebsiteService.getAllWebsite().then((response) => {
+    websiteService.getAllWebsites().then((response) => {
       setWebsites(response.data.results);
     }).catch(error => console.log(error));
   }, []);
