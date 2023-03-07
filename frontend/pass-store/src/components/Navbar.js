@@ -1,6 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            localStorage.removeItem("access_token");
+            navigate("/signin");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <nav className="navbar navbar-expand-md navbar-light bg-light">
             <div className="container-fluid">
@@ -26,7 +39,9 @@ function Navbar() {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link" aria-current="page" href="">Logout</a>
+                            <form onSubmit={handleSubmit}>
+                                <input type="submit" className="border-0 bg-light nav-link" value="Logout"></input>
+                            </form>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" aria-current="page" href="/signin">Login</a>
