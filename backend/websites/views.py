@@ -13,10 +13,14 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
     serializer_class = WebsiteSerializer
 
     def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
         try:
-            return serializer.save(user=self.request.user)
-        except:
-            return Response({'detail': 'Already created'}, status=status.HTTP_400_BAD_REQUEST)
+            website = super().get_queryset().get(url=request.data.get('url')) 
+            return Response(WebsiteSerializer(website).data, status=status.HTTP_201_CREATED)
+        except Website.DoesNotExist:
+            return super().create(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
         """
@@ -50,7 +54,7 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
         except:
             return Response({'detail': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
         return serializer.save(user=user, website=website, password=encrypt_password(password))
-        
+
     def perform_update(self, serializer):
         password = serializer.validated_data.get('password')
         return serializer.save(password=encrypt_password(password))
@@ -79,6 +83,7 @@ class SameCredentials(generics.ListAPIView):
                 }
 
         # Create a list of password that's used with multiple websites
-        same_password = [credentials for password, credentials in password_details.items() if len(credentials['websites']) > 1]
+        same_password = [credentials for password, credentials in password_details.items(
+        ) if len(credentials['websites']) > 1]
 
         return Response(same_password, status=status.HTTP_200_OK)
