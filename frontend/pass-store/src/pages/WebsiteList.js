@@ -43,7 +43,7 @@ function WebsiteList() {
                       </div>
 
                       <div className="col-lg-2 col-sm-12 my-2">
-                        <a href="" className="btn btn-outline-dark w-100">Edit</a>
+                        <a href={`/edit/${credential.id}/`} className="btn btn-outline-dark w-100">Edit</a>
                       </div>
 
                       <div className="col-lg-2 col-sm-12 my-2">
