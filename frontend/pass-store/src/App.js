@@ -6,7 +6,8 @@ import WebsiteList from './pages/WebsiteList';
 import UserProfile from './pages/UserProfile';
 import SamePassword from './pages/SamePassword';
 import CreateWebsite from './pages/CreateWebsite';
-import EditCredential from './pages/EditCredentials';
+import EditCredential from './pages/EditCredential';
+import DeleteCredential from './pages/DeleteCredential';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/create" element={<CreateWebsite />} />
         <Route path="/edit/:credentialId" element={<EditCredential />} />
+        <Route path="/delete/:credentialId" element={<DeleteCredential />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
       </Routes>
