@@ -39,7 +39,7 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/auth/register/", {
+      await axios.post("/api/auth/register/", {
         email,
         password,
         username,
@@ -75,7 +75,8 @@ export default function SignUp() {
           {otherErrors && Object.values(otherErrors).map((errorMessage) => {
             return (
               <div className="alert alert-danger w-100">{errorMessage}</div>
-            )})
+            )
+          })
           }
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>

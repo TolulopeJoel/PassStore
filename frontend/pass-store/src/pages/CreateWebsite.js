@@ -29,9 +29,9 @@ export default function CreateWebsite() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response1 = await axios.post("http://localhost:8000/api/websites/", { url }, { headers: getAuthHeader() });
+      const response1 = await axios.post("/api/websites/", { url }, { headers: getAuthHeader() });
       const websiteId = response1.data.id;
-      const response2 = await axios.post("http://localhost:8000/api/credentials/", { website_id: websiteId, username, password }, { headers: getAuthHeader() });
+      await axios.post("/api/credentials/", { website_id: websiteId, username, password }, { headers: getAuthHeader() });
       navigate("/")
     } catch (error) {
       if (error.response.data.detail) {

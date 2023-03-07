@@ -39,7 +39,7 @@ function EditCredential() {
     }
 
     async function fetchData() {
-        await axios.get("http://localhost:8000/api/credentials/" + `${credentialId}/`, { headers: getAuthHeader() })
+        await axios.get("/api/credentials/" + credentialId + "/", { headers: getAuthHeader() })
             .then((response) => {
                 setUsername(response.data.username)
                 setPassword(response.data.password_)
@@ -49,7 +49,7 @@ function EditCredential() {
     }
 
     async function updateData() {
-        await axios.put("http://localhost:8000/api/credentials/" + `${credentialId}/`, { username, password }, { headers: getAuthHeader() })
+        await axios.put("/api/credentials/" + credentialId + "/", { username, password }, { headers: getAuthHeader() })
             .then((response) => {
                 navigate('/')
             }).catch((error) => {

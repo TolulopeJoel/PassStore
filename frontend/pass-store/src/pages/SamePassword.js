@@ -12,7 +12,7 @@ function SamePassword() {
 
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/same-password/', { headers: getAuthHeader() })
+        axios.get('/api/same-password/', { headers: getAuthHeader() })
             .then((response) => {
                 console.log(response.data);
                 setCredentials(response.data);

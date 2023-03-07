@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Navbar from "../components/Navbar";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 
 const getAuthHeader = () => {
@@ -10,12 +9,11 @@ const getAuthHeader = () => {
 };
 
 function UserProfile() {
-    const { userId } = useParams();
     const [user, setUser] = useState();
 
     useEffect(() => {
         axios.all([
-            axios.get('http://localhost:8000/api/profile/', { headers: getAuthHeader() })
+            axios.get('/api/profile/', { headers: getAuthHeader() })
                 .then((response) => {
                     setUser(response.data.results)
                 }),
