@@ -26,12 +26,35 @@ function EditCredential() {
     const [otherErrors, setotherErrors] = useState({});
     const navigate = useNavigate();
 
+    function catchError(error) {
+        if (error.response.data.detail) {
+            setotherErrors([error.response.data.detail]);
+        } else if (error.response.data.message) {
+            setotherErrors([error.response.data.message]);
+        } else if (error.response.data.non_field_errors) {
+            setotherErrors(error.response.data.non_field_errors);
+        } else {
+            setfieldErrors(error.response.data);
+        }
+    }
+
     async function fetchData() {
-        await axios.put("http://localhost:8000/api/credentials/" + credentialId + "/", { username, password }, { headers: getAuthHeader() }).then((response) => {
-            console.log(response.data);
-        }).catch((error) => {
-            console.log(error);
-        });
+        await axios.get("http://localhost:8000/api/credentials/" + `${credentialId}/`, { headers: getAuthHeader() })
+            .then((response) => {
+                setUsername(response.data.username)
+                setPassword(response.data.password_)
+            }).catch((error) => {
+                catchError(error);
+            });
+    }
+
+    async function updateData() {
+        await axios.put("http://localhost:8000/api/credentials/" + `${credentialId}/`, { username, password }, { headers: getAuthHeader() })
+            .then((response) => {
+                navigate('/')
+            }).catch((error) => {
+                catchError(error);
+            });
     }
 
     useEffect(() => {
@@ -40,22 +63,12 @@ function EditCredential() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetchData()
 
-        // try {
-        //     const response = await axios.put("http://localhost:8000/api/credentials/" + crdentialId + "/", {}, { headers: getAuthHeader() });
-        //     navigate("/")
-        // } catch (error) {
-        //     if (error.response.data.detail) {
-        //         setotherErrors([error.response.data.detail]);
-        //     } else if (error.response.data.message) {
-        //         setotherErrors([error.response.data.message]);
-        //     } else if (error.response.data.non_field_errors) {
-        //         setotherErrors(error.response.data.non_field_errors);
-        //     } else {
-        //         setfieldErrors(error.response.data);
-        //     }
-        // }
+        try {
+            updateData()
+        } catch (error) {
+            catchError(error)
+        }
     };
 
     return (
