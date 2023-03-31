@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-
-
-const getAuthHeader = () => {
-    const token = localStorage.getItem("access_token");
-    return { Authorization: `Bearer ${token}` };
-};
+import api from "../components/api";
 
 
 function DeleteCredential() {
@@ -15,7 +9,7 @@ function DeleteCredential() {
     const [otherErrors, setotherErrors] = useState({});
 
     async function fetchData() {
-        await axios.delete("/api/credentials/" + credentialId + "/", { headers: getAuthHeader() })
+        await api.delete(`/credentials/${credentialId}/`)
             .then((response) => {
             }).catch((error) => {
                 catchError(error);

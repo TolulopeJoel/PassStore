@@ -1,36 +1,25 @@
-import axios from 'axios';
+import api from '../components/api';
 import Navbar from "../components/Navbar";
 import React, { useState, useEffect } from "react";
 
-
-const getAuthHeader = () => {
-    const token = localStorage.getItem("access_token");
-    return { Authorization: `Bearer ${token}` };
-};
 
 function UserProfile() {
     const [user, setUser] = useState();
 
     useEffect(() => {
-        axios.all([
-            axios.get('/api/profile/', { headers: getAuthHeader() })
-                .then((response) => {
-                    setUser(response.data.results)
-                }),
-            // axios.get(`http://localhost:8000/api/profile/${userId}/`, { headers: getAuthHeader() })
-            // .then((response) => {
-            //     setUser(response.data);
-            //     // console.log(response.data)
-            // }).catch((error) => {
-            //     console.log(error);
-            // })
-        ])
+        api.get('/profile/')
+            .then((response) => {
+                setUser(response.data.results)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }, []);
 
 
     return (
         <>
-        <Navbar />
+            <Navbar />
             <h3>Profile</h3>
             {user && user.map(user => (
                 <div>

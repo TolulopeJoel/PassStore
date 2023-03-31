@@ -1,20 +1,15 @@
-import Navbar from '../components/Navbar'
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import Navbar from '../components/Navbar'
+import api from '../components/api';
 
-const getAuthHeader = () => {
-    const token = localStorage.getItem("access_token");
-    return { Authorization: `Bearer ${token}` };
-};
 
 function SamePassword() {
     const [credentials, setCredentials] = useState("");
 
 
     useEffect(() => {
-        axios.get('/api/same-password/', { headers: getAuthHeader() })
+        api.get('/same-password/',)
             .then((response) => {
-                console.log(response.data);
                 setCredentials(response.data);
             })
             .catch(error => console.log(error.response.data));

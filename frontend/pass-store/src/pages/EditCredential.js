@@ -8,15 +8,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
+import api from "../components/api";
 import Navbar from '../components/Navbar'
 
 const theme = createTheme();
 
-const getAuthHeader = () => {
-    const token = localStorage.getItem("access_token");
-    return { Authorization: `Bearer ${token}` };
-};
 
 function EditCredential() {
     const [username, setUsername] = useState("");
@@ -39,7 +35,7 @@ function EditCredential() {
     }
 
     async function fetchData() {
-        await axios.get("/api/credentials/" + credentialId + "/", { headers: getAuthHeader() })
+        await api.get("/credentials/" + credentialId + "/")
             .then((response) => {
                 setUsername(response.data.username)
                 setPassword(response.data.password_)
@@ -49,7 +45,7 @@ function EditCredential() {
     }
 
     async function updateData() {
-        await axios.put("/api/credentials/" + credentialId + "/", { username, password }, { headers: getAuthHeader() })
+        await api.put("/credentials/" + credentialId + "/", { username, password })
             .then((response) => {
                 navigate('/')
             }).catch((error) => {

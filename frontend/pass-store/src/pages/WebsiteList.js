@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { WebsiteService } from "../services/WebsiteService";
+import api from "../components/api";
 import Navbar from "../components/Navbar";
 
 export default function WebsiteList() {
     const [websites, setWebsites] = useState([]);
-    const websiteService = new WebsiteService()
 
     useEffect(() => {
-        websiteService.getAllWebsites().then((response) => {
-            setWebsites(response.data.results);
-        }).catch(error => console.log(error));
+        api.get("/websites/")
+            .then((response) => {
+                setWebsites(response.data.results);
+            })
+            .catch(error => console.log(error));
     }, []);
 
     return (

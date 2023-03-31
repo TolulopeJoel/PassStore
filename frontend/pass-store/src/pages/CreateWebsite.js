@@ -8,15 +8,10 @@ import { useNavigate } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
+import api from "../components/api";
 import Navbar from '../components/Navbar'
 
 const theme = createTheme();
-
-const getAuthHeader = () => {
-  const token = localStorage.getItem("access_token");
-  return { Authorization: `Bearer ${token}` };
-};
 
 export default function CreateWebsite() {
   const [url, setUrl] = useState("");
@@ -29,9 +24,10 @@ export default function CreateWebsite() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response1 = await axios.post("/api/websites/", { url }, { headers: getAuthHeader() });
+      const response1 = await api.post("/websites/", { url });
       const websiteId = response1.data.id;
-      await axios.post("/api/credentials/", { website_id: websiteId, username, password }, { headers: getAuthHeader() });
+
+      await api.post("/credentials/", { website_id: websiteId, username, password });
       navigate("/")
     } catch (error) {
       if (error.response.data.detail) {
