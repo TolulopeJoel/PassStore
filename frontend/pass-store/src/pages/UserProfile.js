@@ -19,18 +19,20 @@ function UserProfile() {
 
     return (
         <>
-            <Navbar />
-            <h3>Profile</h3>
+        <Navbar />
+        <div className='container my-5'>
+            <h1 className='text-center'>Profile</h1>
             {user && user.map(user => (
-                <div>
-                    <p>first name: {user.first_name}</p>
+                <div className='row'>
+                    <p className='my-2'><b>first name:</b> {user.first_name}</p>
                     <p>last name: {user.last_name}</p>
                     <p>username: @{user.username}</p>
                     <p>You registered with {user.email}</p>
-                    <p>you joined Pass Store {new Date(user.date_joined).toLocaleDateString()}</p>
+                    <p>you joined PassStore {new Date(user.date_joined).toLocaleDateString()}</p>
                     <p>So far, you've saved {user.saved_passwords} passwords</p>
                 </div>
             ))}
+        </div>
         </>
     )
 }
