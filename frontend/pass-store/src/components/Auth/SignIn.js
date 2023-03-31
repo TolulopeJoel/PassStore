@@ -1,4 +1,4 @@
-import api from "../Api";
+import api, { apiWithoutToken } from "../api";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
@@ -32,7 +32,7 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.post("/auth/login/", {
+      const response = await apiWithoutToken.post("/auth/login/", {
         username,
         password,
       });

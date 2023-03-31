@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import axios from "axios";
+import api, { apiWithoutToken } from "../api";
 
 function Copyright(props) {
   return (
@@ -39,7 +39,7 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/api/auth/register/", {
+      await apiWithoutToken.post("/auth/register/", {
         email,
         password,
         username,
