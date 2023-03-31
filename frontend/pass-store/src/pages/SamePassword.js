@@ -19,6 +19,7 @@ function SamePassword() {
             })
             .catch(error => console.log(error.response.data));
     }, []);
+
     return (
         <div>
             <Navbar />
@@ -53,7 +54,8 @@ function SamePassword() {
 
             {credentials.length < 1 &&
                 <div>
-                    <h3>You are safe my man</h3>
+                    <img src="https://www.flaticon.com/free-icons/emoji" />
+                    <h3>You have no identical password</h3>
                 </div>
             }
         </div>

@@ -60,6 +60,7 @@ export default function WebsiteList() {
 
                 {websites.length === 0 &&
                     <div>
+                        <img src="https://www.flaticon.com/free-icons/sad" />
                         <h5>You have no passwords. Create one.</h5>
                     </div>
                 }
