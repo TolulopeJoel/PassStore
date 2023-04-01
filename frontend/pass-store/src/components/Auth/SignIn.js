@@ -39,7 +39,7 @@ function SignIn() {
       const token = response.data.access;
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       localStorage.setItem('access_token', token)
-      navigate("/");
+      navigate("/site-details/");
     } catch (error) {
       console.error(error);
     }

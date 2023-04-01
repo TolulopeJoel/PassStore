@@ -47,7 +47,7 @@ function EditCredential() {
     async function updateData() {
         await api.put("/credentials/" + credentialId + "/", { username, password })
             .then((response) => {
-                navigate('/')
+                navigate('/site-details/')
             }).catch((error) => {
                 catchError(error);
             });

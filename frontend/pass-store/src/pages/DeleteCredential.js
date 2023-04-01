@@ -14,7 +14,7 @@ function DeleteCredential() {
 
     useEffect(() => {
         fetchData()
-        navigate('/')
+        navigate('/site-details/')
     }, [credentialId]);
 }
 

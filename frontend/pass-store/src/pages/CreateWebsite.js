@@ -28,7 +28,7 @@ export default function CreateWebsite() {
       const websiteId = response1.data.id;
 
       await api.post("/credentials/", { website_id: websiteId, username, password });
-      navigate("/")
+      navigate("/site-details/")
     } catch (error) {
       if (error.response.data.detail) {
         setotherErrors([error.response.data.detail]);
