@@ -8,13 +8,15 @@ import SamePassword from './pages/SamePassword';
 import CreateWebsite from './pages/CreateWebsite';
 import EditCredential from './pages/EditCredential';
 import DeleteCredential from './pages/DeleteCredential';
+import LandingPage from './pages/LandingPage';
 
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<WebsiteList />} />
+        <Route index element={<LandingPage />} />
+        <Route path="site-details/" element={<WebsiteList />} />
         <Route path="/same-password" element={<SamePassword />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/create" element={<CreateWebsite />} />
