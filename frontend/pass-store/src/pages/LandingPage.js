@@ -13,7 +13,7 @@ export default function LandingPage() {
                             <div className="col-2">
                                 <img src={require("../assets/images/logo.png")} height="50" width="100" alt="logo" />
                             </div>
-                            <div className="col-6 align-self-center text-right">
+                            <div className="col-6 align-self-center text-end">
                                 <a href="/signin" className="lead text-white text-decoration-none">Sign In</a>
                             </div>
                         </div>
@@ -22,7 +22,7 @@ export default function LandingPage() {
                     <h1 className="display-2 font-weight-bold my-5 fw-bolder">
                         <b>
                             Never Forget<br />
-                            Passwords Again___🔒
+                            Passwords Again ___🔒
                         </b>
                     </h1>
                     <p className="lead my-4">
@@ -37,18 +37,18 @@ export default function LandingPage() {
                 <h2 class="text-center font-weight-bold my-5 fw-bold">Secure protection for your passwords</h2>
                 <div class="row">
                     <div data-aos="fade-up" data-aos-delay="0" data-aos-duration="1000" data-aos-once="true" class="col-md-4 text-center">
-                        <img src="img/smart-protect-1.jpg" alt="Anti-spam" class="mx-auto" />
-                        <h4>Anti-spam</h4>
+                        <img src={require("../assets/images/smart-protect-1.jpeg")} alt="Anti-spam" class="mx-auto" />
+                        <h4>Smart Protect</h4>
                         <p>Lorem ipsum dolor sit amet porro his no his deleniti</p>
                     </div>
                     <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" data-aos-once="true" class="col-md-4 text-center">
-                        <img src="img/smart-protect-2.jpg" alt="Phishing Detect" class="mx-auto" />
+                        <img src={require("../assets/images/smart-protect-2.jpeg")} alt="Phishing Detect" class="mx-auto" />
                         <h4>Phishing Detect</h4>
                         <p>Ne error antiopam usu. Sed vocen concludaturque ea</p>
                     </div>
                     <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000" data-aos-once="true" class="col-md-4 text-center">
-                        <img src="img/smart-protect-3.jpg" alt="Smart Scan" class="mx-auto" />
-                        <h4>Smart Scan</h4>
+                        <img src={require("../assets/images/smart-protect-3.jpeg")} alt="Smart Scan" class="mx-auto" />
+                        <h4>vulnerability Scan</h4>
                         <p>Et usu ocurreret elaboraret doctus prodesse assueverit.</p>
                     </div>
                 </div>
