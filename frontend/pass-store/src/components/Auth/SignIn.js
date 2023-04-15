@@ -1,4 +1,4 @@
-import api, { apiWithoutToken } from "../api";
+import api, { apiWithoutToken } from "../Api";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';

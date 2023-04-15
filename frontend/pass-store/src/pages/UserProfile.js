@@ -1,4 +1,4 @@
-import api from '../components/api';
+import api from '../components/Api';
 import Navbar from "../components/Navbar";
 import React, { useState, useEffect } from "react";
 

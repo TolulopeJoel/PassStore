@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from '../components/Navbar'
-import api from '../components/api';
+import api from '../components/Api';
 
 
 function SamePassword() {

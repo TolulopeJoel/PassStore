@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import api from "../components/api";
+import api from "../components/Api";
 import Navbar from '../components/Navbar'
 
 const theme = createTheme();
