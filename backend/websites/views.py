@@ -18,7 +18,7 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         try:
             website = super().get_queryset().get(url=request.data.get('url')) 
-            return Response(WebsiteSerializer(website).data, status=status.HTTP_201_CREATED)
+            return Response(WebsiteSerializer(website).data, status=status.HTTP_200_OK)
         except Website.DoesNotExist:
             return super().create(request, *args, **kwargs)
 
