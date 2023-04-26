@@ -5,7 +5,7 @@ from .import views
 
 
 urlpatterns = [
-    path('same-password/', views.SameCredentials.as_view(), name='same_password'),
+    path('same-password/', views.SameCredentials.as_view(), name='same-credentials'),
 ]
 
 router = DefaultRouter()
