@@ -22,7 +22,7 @@ class WebsiteViewsetTestCase(TestCase):
         """
         url = 'https://example.com'
         data = {'url': url}
-        response = self.client.post(reverse('websites-list'), data=data)
+        response = self.client.post(reverse('website-list'), data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         website = Website.objects.filter(url=url).first()
         self.assertIsNotNone(website)
@@ -35,7 +35,7 @@ class WebsiteViewsetTestCase(TestCase):
         url = 'https://example.com'
         Website.objects.create(user=self.user, url=url)
         data = {'url': url}
-        response = self.client.post(reverse('websites-list'), data=data)
+        response = self.client.post(reverse('website-list'), data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['url'], url)
 
@@ -44,10 +44,10 @@ class WebsiteViewsetTestCase(TestCase):
         Test that a website can be deleted when it has no associated credentials.
         """
         website = Website.objects.create(user=self.user, url='https://example.com')
-        response = self.client.get(reverse('websites-list'))
+        response = self.client.get(reverse('website-list'))
         self.assertEqual([], response.data['results'])
         website.credentials.all().delete()
-        response = self.client.get(reverse('websites-list'))
+        response = self.client.get(reverse('website-list'))
         self.assertNotIn(website, response.data)
 
 
@@ -83,7 +83,7 @@ class CredentialTestCase(TestCase):
         Test that a new credential can be created using the Credential viewset.
         """
         self.client.force_authenticate(user=self.user)
-        url = reverse('credentials-list')
+        url = reverse('credential-list')
         data = {
             'website_id': self.website.id,
             'username': 'newuser',
@@ -99,7 +99,7 @@ class CredentialTestCase(TestCase):
         Test that a credential can be updated using the Credential viewset.
         """
         self.client.force_authenticate(user=self.user)
-        url = reverse('credentials-detail', args=[self.credential.id])
+        url = reverse('credential-detail', args=[self.credential.id])
         data = {
             'password': 'newpassword'
         }

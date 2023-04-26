@@ -10,7 +10,7 @@ urlpatterns = [
 
 router = DefaultRouter()
 
-router.register('websites', views.WebsiteViewset, basename='websites')
-router.register('credentials', views.CredentialViewset, basename='credentials')
+router.register('websites', views.WebsiteViewset, basename='website')
+router.register('credentials', views.CredentialViewset, basename='credential')
 
 urlpatterns += router.urls
