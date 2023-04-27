@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const apiBaseURL = "http://localhost:8000/api/"
+const apiBaseURL = "https://pass-store.up.railway.app/api/"
 
 const api = axios.create({
   baseURL: apiBaseURL,
