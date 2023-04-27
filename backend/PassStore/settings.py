@@ -175,5 +175,5 @@ ENCRYPTION_KEY = ENCRYPTION_KEY.encode()
 
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
-     'https://pass-store.netlify.app/',
+     'https://pass-store.netlify.app',
 ]
