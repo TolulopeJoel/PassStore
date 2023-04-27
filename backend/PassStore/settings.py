@@ -137,8 +137,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Default primary key field type
@@ -176,5 +174,6 @@ ENCRYPTION_KEY = env.str('ENCRYPTION_KEY', default='US_3ljng2HJO6lBeJBLk_Gme_ReY
 ENCRYPTION_KEY = ENCRYPTION_KEY.encode()
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+     'http://localhost:3000',
+     'https://pass-store.up.railway.app/',
 ]
