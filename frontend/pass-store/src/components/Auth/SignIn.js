@@ -32,7 +32,7 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await apiWithoutToken.post("/auth/login/", {
+      const response = await api.post("/auth/login/", {
         username,
         password,
       });

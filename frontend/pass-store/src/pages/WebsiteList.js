@@ -17,10 +17,10 @@ export default function WebsiteList() {
         <>
             <Navbar />
             <div className="container">
-                <form className="d-flex mt-5" role="search">
+                {/* <form className="d-flex mt-5" role="search">
                     <input className="form-control form-control-lg me-2" type="search" placeholder="Search sites..." aria-label="Search" />
                     <button type="submit" className="btn btn-lg search-btn">Search</button>
-                </form>
+                </form> */}
 
                 <h1 className="display-6 my-5">Welcome { }</h1>
 
