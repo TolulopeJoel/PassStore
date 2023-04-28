@@ -33,7 +33,11 @@ class WebsiteViewsetTestCase(TestCase):
         Test that attempting to create a website with a duplicate URL returns the existing website.
         """
         url = 'https://example.com'
-        Website.objects.create(user=self.user, url=url)
+        website1 = Website.objects.create(user=self.user, url=url)
+        credential = Credential.objects.create(user=self.user, website=website1, username='foo', password='bar')
+        website1.credentials.set([credential])
+        website1.save()
+        
         data = {'url': url}
         response = self.client.post(reverse('website-list'), data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

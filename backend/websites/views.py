@@ -14,46 +14,50 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-
+    
     def create(self, request, *args, **kwargs):
-        try:
-            website = super().get_queryset().get(url=request.data.get('url')) 
+        url = request.data.get('url')
+        
+        # Check if website with given url already exists
+        website = self.get_queryset().filter(url=url).first()
+        if website:
             return Response(WebsiteSerializer(website).data, status=status.HTTP_200_OK)
-        except Website.DoesNotExist:
-            return super().create(request, *args, **kwargs)
+
+        return super().create(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
         """
-        Return websites only if website has credentials.
+        Return websites only if they have credentials.
         And delete websites without credentials.
         """
         queryset = super().get_queryset()
-        websites_with_credentials = []
+        websites_with_credentials = queryset.filter(credentials__isnull=False).values_list('id', flat=True)
 
-        for website in queryset:
-            website_credentials = website.credentials.all()
-            if website_credentials.count() > 0:
-                websites_with_credentials.append(website.id)
-            else:
-                Website.objects.get(id=website.id).delete()
+        # Delete websites without credentials
+        queryset.exclude(id__in=websites_with_credentials).delete()
 
-        return super().get_queryset().filter(id__in=websites_with_credentials)
+        return queryset.filter(id__in=websites_with_credentials)
 
 
 class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
     queryset = Credential.objects.all()
     serializer_class = CredentialSerializer
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        website_id = self.request.data.get('website_id')
-        password = serializer.validated_data.get('password')
+    def create(self, request, *args, **kwargs):
+        user = request.user
+        website_id = request.data.get('website_id')
+        password = request.data.get('password')
 
         try:
             website = Website.objects.get(id=website_id)
-        except:
-            return Response({'detail': 'Post not found.'}, status=status.HTTP_404_NOT_FOUND)
-        return serializer.save(user=user, website=website, password=encrypt_password(password))
+            
+            serializer = CredentialSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(website=website, user=request.user, password=encrypt_password(password))
+            
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Website.DoesNotExist:
+            return Response({'detail': 'Website does not exist.'}, status=status.HTTP_404_NOT_FOUND)
 
     def perform_update(self, serializer):
         password = serializer.validated_data.get('password')
