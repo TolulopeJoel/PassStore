@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from "react";
 import api from "../components/Api";
 import Navbar from "../components/Navbar";
+import { Pagination } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
 export default function WebsiteList() {
     const [websites, setWebsites] = useState([]);
 
+    // pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
     useEffect(() => {
-        api.get("/websites/")
+        api.get(`/websites/?page=${currentPage}`)
             .then((response) => {
                 setWebsites(response.data.results);
+                setTotalPages(Math.ceil(response.data.count / 10));
             })
             .catch(error => console.log(error));
     }, []);
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
 
     return (
         <>
@@ -67,6 +78,12 @@ export default function WebsiteList() {
                 }
 
                 <a href="/create" className="btn btn-lg my-3 mx-auto add-password">Add Password +</a>
+
+                <div className="d-flex justify-content-center align-items-center mt-5">
+                    <Stack spacing={2}>
+                        <Pagination count={totalPages} page={currentPage} shape='rounded' onChange={handlePageChange} />
+                    </Stack>
+                </div>
             </div>
         </>
     );
