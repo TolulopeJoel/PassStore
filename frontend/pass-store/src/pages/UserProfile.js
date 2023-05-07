@@ -6,15 +6,28 @@ import React, { useState, useEffect } from "react";
 function UserProfile() {
     const [user, setUser] = useState();
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         api.get('/profile/')
             .then((response) => {
+                setLoading(false);
                 setUser(response.data.results)
             })
             .catch((error) => {
                 console.log(error);
             })
     }, []);
+
+    if (loading) {
+        return (
+            <div className="loading">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+    }
 
 
     return (

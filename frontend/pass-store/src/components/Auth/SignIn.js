@@ -37,6 +37,7 @@ function SignIn() {
         password,
       });
       const token = response.data.access;
+      const refresh_token = response.data.refresh;
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       localStorage.setItem('access_token', token)
       localStorage.setItem('refresh_token', refresh_token)

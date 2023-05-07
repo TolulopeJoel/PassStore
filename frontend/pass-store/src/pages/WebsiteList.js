@@ -7,6 +7,8 @@ import Stack from '@mui/material/Stack';
 export default function WebsiteList() {
     const [websites, setWebsites] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
     // pagination
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -14,6 +16,7 @@ export default function WebsiteList() {
     useEffect(() => {
         api.get(`/websites/?page=${currentPage}`)
             .then((response) => {
+                setLoading(false);
                 setWebsites(response.data.results);
                 setTotalPages(Math.ceil(response.data.count / 10));
             })
@@ -23,6 +26,16 @@ export default function WebsiteList() {
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
     };
+
+    if (loading) {
+        return (
+            <div className="loading">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>

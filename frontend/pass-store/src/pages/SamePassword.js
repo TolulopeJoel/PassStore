@@ -6,14 +6,27 @@ import api from '../components/Api';
 function SamePassword() {
     const [credentials, setCredentials] = useState("");
 
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         api.get('/same-password/',)
             .then((response) => {
+                setLoading(false);
                 setCredentials(response.data);
             })
             .catch(error => console.log(error.response.data));
     }, []);
+
+    if (loading) {
+        return (
+            <div className="loading">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div>
