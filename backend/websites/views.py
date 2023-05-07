@@ -50,14 +50,14 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
         try:
             website = Website.objects.get(id=website_id)
-            
-            serializer = CredentialSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save(website=website, user=request.user, password=encrypt_password(password))
-            
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Website.DoesNotExist:
             return Response({'detail': 'Website does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(website=website, user=user, password=encrypt_password(password))
+            
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def perform_update(self, serializer):
         password = serializer.validated_data.get('password')
