@@ -65,12 +65,11 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
 
 class SameCredentials(generics.ListAPIView):
-
     def get(self, request, *args, **kwargs):
         user = request.user
         site_credentials = Credential.objects.filter(user=user)
 
-        # Create a dictionary to group site credentials by password
+        # dictionary to group site credentials by password
         password_details = {}
         for credentials in site_credentials:
             password = credentials.decrypt_password()
@@ -78,16 +77,20 @@ class SameCredentials(generics.ListAPIView):
                 'username': credentials.username,
                 'url': credentials.website.url,
             }
-            if password in password_details:
-                password_details[password]['websites'].append(website)
-            else:
+            if password not in password_details:
                 password_details[password] = {
+                    'id': len(password_details),
                     'password': password,
                     'websites': [website],
                 }
+            else:
+                password_details[password]['websites'].append(website)
 
-        # Create a list of password that's used with multiple websites
-        same_password = [credentials for password, credentials in password_details.items(
-        ) if len(credentials['websites']) > 1]
+        # Filter passwords that are used with multiple websites
+        same_password = [
+            credentials for credentials in password_details.values()
+            if len(credentials['websites']) > 1
+        ]
 
         return Response(same_password, status=status.HTTP_200_OK)
+
