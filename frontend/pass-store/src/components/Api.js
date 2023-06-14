@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const apiBaseURL = "https://pass-store.up.railway.app/api/"
+const apiBaseURL = "https://pass-store.onrender.com/api/"
 
 const api = axios.create({
   baseURL: apiBaseURL,
