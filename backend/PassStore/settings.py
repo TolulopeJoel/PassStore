@@ -31,9 +31,9 @@ SECRET_KEY = 'django-insecure-=znhqrb=^zjq1z)l++n_(76&)_ih#1(jy&==v^m+1zy5)c$5$0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['.railway.app', 'localhost']
+ALLOWED_HOSTS = ['.railway.app', '.onrender.com', 'localhost']
 
-CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://*.railway.app', 'https://*.onrender.com']
 
 
 # Application definition
@@ -96,10 +96,11 @@ WSGI_APPLICATION = 'PassStore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pass-store',
+        'ENGINE': 'django_psdb_engine',
+        'NAME': env.str('DB_NAME'),
     }
 }
+
 
 DATABASES['default'] =  dj_database_url.config()
 
