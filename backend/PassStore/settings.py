@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-import dj_database_url
 from datetime import timedelta
-from environs import Env
 from pathlib import Path
+
+from environs import Env
 
 env = Env()
 env.read_env()
@@ -95,14 +95,20 @@ WSGI_APPLICATION = 'PassStore.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django_psdb_engine',
-        'NAME': env.str('DB_NAME'),
+  'default': {
+    'ENGINE': 'django_psdb_engine',
+    'NAME': env.str('DB_NAME'),
+    'HOST': env.str('DB_HOST'),
+    'PORT': env.str('DB_PORT'),
+    'USER': env.str('DB_USER'),
+    'PASSWORD': env.str('DB_PASSWORD'),
+    'OPTIONS': {
+        'ssl': {'rejectUnauthorized':True},
+        'charset': 'utf8mb4', 
     }
+  }
 }
 
-
-DATABASES['default'] =  dj_database_url.config()
 
 
 # Password validation
