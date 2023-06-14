@@ -1,6 +1,7 @@
 asgiref
 certifi
 cloudinary
+cryptography
 dj-database-url
 Django
 django-cors-headers
