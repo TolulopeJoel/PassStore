@@ -1,26 +1,45 @@
 import base64
 from django.conf import settings
-from cryptography .fernet import Fernet
+from cryptography.fernet import Fernet
 
 
 def encrypt_password(password):
+    """
+    Encrypt the given password using Fernet encryption.
+
+    Args:
+        password (str): The password to be encrypted.
+
+    Returns:
+        str: The encrypted password as a URL-safe base64 encoded string, or None if encryption fails.
+    """
     try:
         password = str(password)
         cipher = Fernet(settings.ENCRYPTION_KEY)
-        encrypt_password = cipher.encrypt(password.encode('ascii'))
-        encrypt_password = base64.urlsafe_b64encode(encrypt_password).decode('ascii')
+        encrypted_password = cipher.encrypt(password.encode('ascii'))
+        encrypted_password = base64.urlsafe_b64encode(
+            encrypted_password).decode('ascii')
 
-        return encrypt_password
+        return encrypted_password
     except:
         return None
 
 
 def decrypt_password(password):
+    """
+    Decrypt the given password using Fernet decryption.
+
+    Args:
+        password (str): The encrypted password to be decrypted.
+
+    Returns:
+        str: The decrypted password as a string, or None if decryption fails.
+    """
     try:
         password = base64.urlsafe_b64decode(password)
         cipher = Fernet(settings.ENCRYPTION_KEY)
-        decode_password = cipher.decrypt(password).decode('ascii')
+        decoded_password = cipher.decrypt(password).decode('ascii')
 
-        return decode_password
+        return decoded_password
     except:
         return None

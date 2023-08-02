@@ -1,3 +1,6 @@
+from rest_framework import generics, status
+from django.db.models.functions import Length
+from django.db.models import Count
 from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 
@@ -14,10 +17,10 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-    
+
     def create(self, request, *args, **kwargs):
         url = request.data.get('url')
-        
+
         # Check if website with given url already exists
         website = self.get_queryset().filter(url=url).first()
         if website:
@@ -31,7 +34,8 @@ class WebsiteViewset(UserQuerySetMixin, viewsets.ModelViewSet):
         And delete websites without credentials.
         """
         queryset = super().get_queryset()
-        websites_with_credentials = queryset.filter(credentials__isnull=False).values_list('id', flat=True)
+        websites_with_credentials = queryset.filter(
+            credentials__isnull=False).values_list('id', flat=True)
 
         # Delete websites without credentials
         queryset.exclude(id__in=websites_with_credentials).delete()
@@ -55,8 +59,12 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(website=website, user=user, password=encrypt_password(password))
-            
+        serializer.save(
+            user=user,
+            website=website,
+            password=encrypt_password(password)
+        )
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def perform_update(self, serializer):
@@ -65,11 +73,23 @@ class CredentialViewset(UserQuerySetMixin, viewsets.ModelViewSet):
 
 
 class SameCredentials(generics.ListAPIView):
+    """
+    API view to retrieve credentials with the same password used on multiple websites.
+    This view returns a list of credentials that share the same password and are associated with multiple websites.
+    The credentials are filtered for the currently authenticated user.
+    """
+
     def get(self, request, *args, **kwargs):
+        """
+        Handles the HTTP GET request and returns the list of credentials with the same password.
+        """
         user = request.user
         site_credentials = Credential.objects.filter(user=user)
 
-        # dictionary to group site credentials by password
+        # Filter credentials with password length > 0
+        site_credentials = site_credentials.filter(password_length__gt=0)
+
+        # Group site credentials by password
         password_details = {}
         for credentials in site_credentials:
             password = credentials.decrypt_password()
@@ -93,4 +113,3 @@ class SameCredentials(generics.ListAPIView):
         ]
 
         return Response(same_password, status=status.HTTP_200_OK)
-

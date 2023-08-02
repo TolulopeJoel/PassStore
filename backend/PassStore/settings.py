@@ -46,11 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # local apps
     'websites.apps.WebsitesConfig',
     'accounts',
-    
+
     # 3rd party apps
     'rest_framework',
     'rest_framework_simplejwt',
@@ -96,20 +96,19 @@ WSGI_APPLICATION = 'PassStore.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django_psdb_engine',
-    'NAME': env.str('DB_NAME'),
-    'HOST': env.str('DB_HOST'),
-    'PORT': env.str('DB_PORT'),
-    'USER': env.str('DB_USER'),
-    'PASSWORD': env.str('DB_PASSWORD'),
-    'OPTIONS': {
-        'ssl': {'rejectUnauthorized':True},
-        'charset': 'utf8mb4', 
+    'default': {
+        'ENGINE': 'django_psdb_engine',
+        'NAME': env.str('DB_NAME'),
+        'HOST': env.str('DB_HOST'),
+        'PORT': env.str('DB_PORT'),
+        'USER': env.str('DB_USER'),
+        'PASSWORD': env.str('DB_PASSWORD'),
+        'OPTIONS': {
+            'ssl': {'rejectUnauthorized': True},
+            'charset': 'utf8mb4',
+        }
     }
-  }
 }
-
 
 
 # Password validation
@@ -183,10 +182,11 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
-ENCRYPTION_KEY = env.str('ENCRYPTION_KEY', default='US_3ljng2HJO6lBeJBLk_Gme_ReYv6tHOayXBWbxZ5Y=')
+ENCRYPTION_KEY = env.str(
+    'ENCRYPTION_KEY', default='US_3ljng2HJO6lBeJBLk_Gme_ReYv6tHOayXBWbxZ5Y=')
 ENCRYPTION_KEY = ENCRYPTION_KEY.encode()
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000',
-     'https://pass-store.netlify.app',
+    'http://localhost:3000',
+    'https://pass-store.netlify.app',
 ]
