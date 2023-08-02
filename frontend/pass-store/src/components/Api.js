@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const apiBaseURL = "https://pass-store.onrender.com/api/"
+const apiBaseURL = "https://pass-store-hcmt.onrender.com/api/"
 
 const api = axios.create({
   baseURL: apiBaseURL,
@@ -33,7 +33,7 @@ api.interceptors.response.use(
 
       // Try to refresh the access token using the refresh token
       return axios
-        .post(`${apiBaseURL}/auth/token/refresh/`, { refresh: refreshToken })
+        .post(`${apiBaseURL}auth/token/refresh/`, { refresh: refreshToken })
         .then((response) => {
           // Update the access token in local storage
           localStorage.setItem("access_token", response.data.access);
